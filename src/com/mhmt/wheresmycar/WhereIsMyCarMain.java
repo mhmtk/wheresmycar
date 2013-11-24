@@ -32,9 +32,12 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	SharedPreferences mSharedPrefs;
 	SharedPreferences.Editor mSharedPrefsEditor;
 
+	private double carLat;
+	private double carLon;
+	
 	TextView textCurrentLoc;
 	TextView textCarLoc;
-
+	
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
 
@@ -45,9 +48,9 @@ GooglePlayServicesClient.OnConnectionFailedListener
 
 		textCurrentLoc = (TextView) findViewById(R.id.edit_currentlocation);
 		textCarLoc = (TextView) findViewById(R.id.edit_storedlocation);
-
+		
 		mLocClient = new LocationClient(this, this, this);
-
+		
 		mSharedPrefs = this.getSharedPreferences("com.mhmt.wheresmycar", Context.MODE_PRIVATE);
 
 		displayCarLoc();
@@ -87,11 +90,12 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	}
 
 	private void displayCarLoc() {
-		if(mSharedPrefs.contains("CarLot")) //if there is a stored lot
+		if(mSharedPrefs.contains("CarLat")) //if there is a stored lat
 		{
+			carLat = Double.parseDouble(mSharedPrefs.getString("CarLat", ""));
+			carLon = Double.parseDouble(mSharedPrefs.getString("CarLon", ""));
 			//display the stored car loc on its appropriate view field
-			textCarLoc.setText(mSharedPrefs.getString("CarLot", "")
-					+ ", " + mSharedPrefs.getString("CarLon", ""));
+			textCarLoc.setText(carLat + ", " + carLon);
 		}
 		else 
 			textCarLoc.setText("No stored car location exists.");
@@ -107,15 +111,18 @@ GooglePlayServicesClient.OnConnectionFailedListener
 		{
 			mCurrentLoc = mLocClient.getLastLocation();
 
-			double carLat = mCurrentLoc.getLatitude();
-			double carLon = mCurrentLoc.getLongitude();
+			carLat = mCurrentLoc.getLatitude();
+			carLon = mCurrentLoc.getLongitude();
 
 			mSharedPrefs.edit().putString("CarLat", Double.toString(carLat)).commit();
 			mSharedPrefs.edit().putString("CarLon", Double.toString(carLon)).commit();
 
 			((TextView) findViewById(R.id.edit_storedlocation))
-			.setText(Double.toString(carLat)
-					+ ", " + Double.toString(carLon));
+			.setText(carLat + ", " + carLon);
+		}
+		else
+		{
+			Toast.makeText(getApplicationContext(), "Error! Cannot establish connection" , Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -125,6 +132,10 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	 */
 	public void viewMap(View view){
 		Intent intent = new Intent(this, MapActivity.class);
+		intent.putExtra("curLat", mCurrentLoc.getLatitude());
+		intent.putExtra("curLon", mCurrentLoc.getLongitude());
+		intent.putExtra("carLat", carLat);
+		intent.putExtra("carLon", carLon);
 		startActivity(intent);
 	}
 
