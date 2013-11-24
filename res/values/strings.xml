@@ -7,5 +7,7 @@
     <string name="button_find">Find my car </string>
     <string name="text_current">You\'re here </string>
     <string name="text_stored">Your car is here </string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="button_map">Get Visuals</string>
 
 </resources>

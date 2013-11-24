@@ -57,8 +57,9 @@ int drawable ic_plusone_medium_off_client 0x7f020019
 int drawable ic_plusone_small_off_client 0x7f02001a
 int drawable ic_plusone_standard_off_client 0x7f02001b
 int drawable ic_plusone_tall_off_client 0x7f02001c
-int id action_settings 0x7f05000c
+int id action_settings 0x7f05000d
 int id button_find 0x7f05000b
+int id button_map 0x7f05000c
 int id button_store 0x7f05000a
 int id edit_currentlocation 0x7f050006
 int id edit_storedlocation 0x7f050008
@@ -71,8 +72,10 @@ int id terrain 0x7f050003
 int id text_current 0x7f050005
 int id text_stored 0x7f050007
 int integer google_play_services_version 0x7f070000
-int layout activity_where_is_my_car_main 0x7f030000
-int menu where_is_my_car_main 0x7f0a0000
+int layout activity_map 0x7f030000
+int layout activity_where_is_my_car_main 0x7f030001
+int menu map 0x7f0a0000
+int menu where_is_my_car_main 0x7f0a0001
 int string action_settings 0x7f06001b
 int string app_name 0x7f06001a
 int string auth_client_needs_enabling_title 0x7f060015
@@ -82,6 +85,7 @@ int string auth_client_play_services_err_notification_msg 0x7f060018
 int string auth_client_requested_by_msg 0x7f060019
 int string auth_client_using_bad_version_title 0x7f060014
 int string button_find 0x7f06001d
+int string button_map 0x7f060021
 int string button_store 0x7f06001c
 int string common_google_play_services_enable_button 0x7f060006
 int string common_google_play_services_enable_text 0x7f060005
@@ -105,6 +109,7 @@ int string common_signin_button_text 0x7f060012
 int string common_signin_button_text_long 0x7f060013
 int string text_current 0x7f06001e
 int string text_stored 0x7f06001f
+int string title_activity_map 0x7f060020
 int style AppBaseTheme 0x7f090000
 int style AppTheme 0x7f090001
 int[] styleable AdsAttrs { 0x7f010000, 0x7f010001 }

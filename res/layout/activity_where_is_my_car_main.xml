@@ -38,8 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dip"
-        android:ems="10" />
+        android:layout_marginTop="5dip" />
 
     <LinearLayout
         android:id="@+id/linear_buttons"
@@ -53,7 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_store" />
+            android:text="@string/button_store" 
+            android:onClick="storeCarLoc"/>
 
         <Button
             android:id="@+id/button_find"
@@ -62,5 +62,12 @@
             android:layout_weight="1"
             android:text="@string/button_find" />
     </LinearLayout>
-
+    
+    <Button
+        android:id="@+id/button_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_map"
+        android:onClick="viewMap" 
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

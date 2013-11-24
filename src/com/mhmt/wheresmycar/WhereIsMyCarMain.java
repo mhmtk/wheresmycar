@@ -2,6 +2,7 @@ package com.mhmt.wheresmycar;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -25,19 +26,12 @@ GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener
 
 {
-
-	private String carLat;
-	private String carLng;
-
-	private String currentLat;
-	private String currentLng;
-
 	LocationClient mLocClient;
 	Location mCurrentLoc;
 
 	SharedPreferences mSharedPrefs;
 	SharedPreferences.Editor mSharedPrefsEditor;
-	
+
 	TextView textCurrentLoc;
 
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -47,10 +41,33 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_where_is_my_car_main);
-		
+
 		textCurrentLoc = (TextView) findViewById(R.id.edit_currentlocation);
-		
+
 		mLocClient = new LocationClient(this, this, this);
+
+		mSharedPrefs = this.getSharedPreferences("com.mhmt.wheresmycar", Context.MODE_PRIVATE);
+
+		displayCarLoc();
+	}
+
+	@Override
+	public void onConnected(Bundle dataBundle) {
+		// Display the connection status
+		getCurrentLoc();
+		displayCurrentLoc();
+		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+	}
+
+	/*
+	 * gets the current location and stores it
+	 */
+	private void getCurrentLoc() {
+		// TODO Auto-generated method stub
+		mCurrentLoc = mLocClient.getLastLocation();
+
+		mSharedPrefs.edit().putString("currentLocLat", Double.toString(mCurrentLoc.getLatitude())).commit();
+		mSharedPrefs.edit().putString("currentLocLon", Double.toString(mCurrentLoc.getLongitude())).commit();
 	}
 
 	/*
@@ -58,20 +75,52 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	 */
 	private void displayCurrentLoc() {
 		// TODO Auto-generated method stub
-		textCurrentLoc.setText(Double.toString(mCurrentLoc.getLatitude())
+		((TextView) findViewById(R.id.edit_currentlocation))
+		.setText(Double.toString(mCurrentLoc.getLatitude())
 				+ ", " + Double.toString(mCurrentLoc.getLongitude()));
-		
 	}
 
-
-	private void getCurrentLoc() {
-		// TODO Auto-generated method stub
-		mCurrentLoc = mLocClient.getLastLocation();
-		
+	private void displayCarLoc() {
+		TextView carTextView = ((TextView) findViewById(R.id.edit_storedlocation));
+		if(mSharedPrefs.contains("CarLot")) //if there is a stored lot
+		{
+			//display the stored car loc on its appropriate view field
+			carTextView.setText(mSharedPrefs.getString("CarLot", "")
+					+ ", " + mSharedPrefs.getString("CarLon", ""));
+		}
+		else 
+			carTextView.setText("No stored car location exists.");
 	}
 
+	/*
+	 * called when "i parked here" is clicked,
+	 * sets the current loc as the car loc
+	 */
+	public void storeCarLoc(View view) {
+		mLocClient.connect();
+		if(servicesConnected())
+		{
+			mCurrentLoc = mLocClient.getLastLocation();
+
+			double carLat = mCurrentLoc.getLatitude();
+			double carLon = mCurrentLoc.getLongitude();
+
+			mSharedPrefs.edit().putString("CarLat", Double.toString(carLat)).commit();
+			mSharedPrefs.edit().putString("CarLon", Double.toString(carLon)).commit();
+
+			((TextView) findViewById(R.id.edit_storedlocation))
+			.setText(Double.toString(carLat)
+					+ ", " + Double.toString(carLon));
+		}
+	}
+
+	/*
+	 * Called when show map is clicked, launches the Map activity,
+	 * which displays a map with a marker for current loc and car loc
+	 */
 	public void viewMap(View view){
-
+		Intent intent = new Intent(this, MapActivity.class);
+		startActivity(intent);
 	}
 
 	public static class ErrorDialogFragment extends DialogFragment{
@@ -123,15 +172,6 @@ GooglePlayServicesClient.OnConnectionFailedListener
 			return false;
 		}
 	}
-
-	@Override
-	public void onConnected(Bundle dataBundle) {
-		// Display the connection status
-		getCurrentLoc();
-		displayCurrentLoc();
-		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-	}
-
 
 	@Override
 	public void onDisconnected() {

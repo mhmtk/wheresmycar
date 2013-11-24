@@ -208,8 +208,9 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f02001c;
     }
     public static final class id {
-        public static final int action_settings=0x7f05000c;
+        public static final int action_settings=0x7f05000d;
         public static final int button_find=0x7f05000b;
+        public static final int button_map=0x7f05000c;
         public static final int button_store=0x7f05000a;
         public static final int edit_currentlocation=0x7f050006;
         public static final int edit_storedlocation=0x7f050008;
@@ -226,10 +227,12 @@ containing a value of this type.
         public static final int google_play_services_version=0x7f070000;
     }
     public static final class layout {
-        public static final int activity_where_is_my_car_main=0x7f030000;
+        public static final int activity_map=0x7f030000;
+        public static final int activity_where_is_my_car_main=0x7f030001;
     }
     public static final class menu {
-        public static final int where_is_my_car_main=0x7f0a0000;
+        public static final int map=0x7f0a0000;
+        public static final int where_is_my_car_main=0x7f0a0001;
     }
     public static final class string {
         public static final int action_settings=0x7f06001b;
@@ -258,6 +261,7 @@ containing a value of this type.
          */
         public static final int auth_client_using_bad_version_title=0x7f060014;
         public static final int button_find=0x7f06001d;
+        public static final int button_map=0x7f060021;
         public static final int button_store=0x7f06001c;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
@@ -332,6 +336,7 @@ containing a value of this type.
         public static final int common_signin_button_text_long=0x7f060013;
         public static final int text_current=0x7f06001e;
         public static final int text_stored=0x7f06001f;
+        public static final int title_activity_map=0x7f060020;
     }
     public static final class style {
         /** 
