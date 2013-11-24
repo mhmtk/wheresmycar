@@ -33,6 +33,7 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	SharedPreferences.Editor mSharedPrefsEditor;
 
 	TextView textCurrentLoc;
+	TextView textCarLoc;
 
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
@@ -43,6 +44,7 @@ GooglePlayServicesClient.OnConnectionFailedListener
 		setContentView(R.layout.activity_where_is_my_car_main);
 
 		textCurrentLoc = (TextView) findViewById(R.id.edit_currentlocation);
+		textCarLoc = (TextView) findViewById(R.id.edit_storedlocation);
 
 		mLocClient = new LocationClient(this, this, this);
 
@@ -65,9 +67,14 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	private void getCurrentLoc() {
 		// TODO Auto-generated method stub
 		mCurrentLoc = mLocClient.getLastLocation();
+		storeCurrentLoc(mCurrentLoc.getLatitude(), mCurrentLoc.getLongitude());
 
-		mSharedPrefs.edit().putString("currentLocLat", Double.toString(mCurrentLoc.getLatitude())).commit();
-		mSharedPrefs.edit().putString("currentLocLon", Double.toString(mCurrentLoc.getLongitude())).commit();
+	}
+
+	private void storeCurrentLoc(double latitude, double longitude) {
+		// TODO Auto-generated method stub
+		mSharedPrefs.edit().putString("currentLocLat", Double.toString(latitude)).commit();
+		mSharedPrefs.edit().putString("currentLocLon", Double.toString(longitude)).commit();
 	}
 
 	/*
@@ -75,21 +82,19 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	 */
 	private void displayCurrentLoc() {
 		// TODO Auto-generated method stub
-		((TextView) findViewById(R.id.edit_currentlocation))
-		.setText(Double.toString(mCurrentLoc.getLatitude())
+		textCurrentLoc.setText(Double.toString(mCurrentLoc.getLatitude())
 				+ ", " + Double.toString(mCurrentLoc.getLongitude()));
 	}
 
 	private void displayCarLoc() {
-		TextView carTextView = ((TextView) findViewById(R.id.edit_storedlocation));
 		if(mSharedPrefs.contains("CarLot")) //if there is a stored lot
 		{
 			//display the stored car loc on its appropriate view field
-			carTextView.setText(mSharedPrefs.getString("CarLot", "")
+			textCarLoc.setText(mSharedPrefs.getString("CarLot", "")
 					+ ", " + mSharedPrefs.getString("CarLon", ""));
 		}
 		else 
-			carTextView.setText("No stored car location exists.");
+			textCarLoc.setText("No stored car location exists.");
 	}
 
 	/*
