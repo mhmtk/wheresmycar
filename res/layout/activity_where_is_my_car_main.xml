@@ -8,4 +8,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".WhereIsMyCarMain" >
 
+    <EditText
+        android:id="@+id/edit_currentlocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dip"
+        android:ems="10" >
+    </EditText>
+
+    <EditText
+        android:id="@+id/edit_storedlocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_store"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dip"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/button_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_currentlocation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/button_store" />
+
+    <Button
+        android:id="@+id/button_find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_store"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="@string/button_find" />
+
 </RelativeLayout>
