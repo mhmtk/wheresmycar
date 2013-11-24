@@ -106,7 +106,6 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	 * sets the current loc as the car loc
 	 */
 	public void storeCarLoc(View view) {
-		mLocClient.connect();
 		if(servicesConnected())
 		{
 			mCurrentLoc = mLocClient.getLastLocation();
