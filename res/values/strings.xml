@@ -3,7 +3,9 @@
 
     <string name="app_name">Where\'s My Car?</string>
     <string name="action_settings">Settings</string>
-    <string name="button_store"> Here\'s my car </string>
-    <string name="button_find"> Find my car </string>
+    <string name="button_store">I parked here </string>
+    <string name="button_find">Find my car </string>
+    <string name="text_current">You\'re here </string>
+    <string name="text_stored">Your car is here </string>
 
 </resources>
