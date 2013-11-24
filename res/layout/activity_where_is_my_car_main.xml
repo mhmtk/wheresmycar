@@ -52,22 +52,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_store" 
-            android:onClick="storeCarLoc"/>
+            android:onClick="storeCarLoc"
+            android:text="@string/button_store" />
 
         <Button
-            android:id="@+id/button_find"
+            android:id="@+id/button_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:text="@string/button_find" />
+            android:onClick="viewMap"
+            android:text="@string/button_map" />
     </LinearLayout>
-    
-    <Button
-        android:id="@+id/button_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_map"
-        android:onClick="viewMap" 
-        android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

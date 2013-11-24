@@ -31,9 +31,6 @@ GooglePlayServicesClient.OnConnectionFailedListener
 
 	SharedPreferences mSharedPrefs;
 	SharedPreferences.Editor mSharedPrefsEditor;
-
-	private double carLat;
-	private double carLon;
 	
 	TextView textCurrentLoc;
 	TextView textCarLoc;
@@ -52,14 +49,16 @@ GooglePlayServicesClient.OnConnectionFailedListener
 		mLocClient = new LocationClient(this, this, this);
 		
 		mSharedPrefs = this.getSharedPreferences("com.mhmt.wheresmycar", Context.MODE_PRIVATE);
-
+		
+		//display the stored car loc if there is one
 		displayCarLoc();
 	}
 
 	@Override
 	public void onConnected(Bundle dataBundle) {
-		// Display the connection status
+		//get the current loc and store it
 		getCurrentLoc();
+		//display the current loc
 		displayCurrentLoc();
 		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
 	}
@@ -68,12 +67,16 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	 * gets the current location and stores it
 	 */
 	private void getCurrentLoc() {
-		// TODO Auto-generated method stub
+		//get current loc
 		mCurrentLoc = mLocClient.getLastLocation();
+		//store current loc
 		storeCurrentLoc(mCurrentLoc.getLatitude(), mCurrentLoc.getLongitude());
 
 	}
 
+	/*
+	 * stores the current loc
+	 */
 	private void storeCurrentLoc(double latitude, double longitude) {
 		// TODO Auto-generated method stub
 		mSharedPrefs.edit().putString("currentLocLat", Double.toString(latitude)).commit();
@@ -89,11 +92,15 @@ GooglePlayServicesClient.OnConnectionFailedListener
 				+ ", " + Double.toString(mCurrentLoc.getLongitude()));
 	}
 
+	/*
+	 * displays the stored car loc if there is one
+	 */
 	private void displayCarLoc() {
 		if(mSharedPrefs.contains("CarLat")) //if there is a stored lat
 		{
-			carLat = Double.parseDouble(mSharedPrefs.getString("CarLat", ""));
-			carLon = Double.parseDouble(mSharedPrefs.getString("CarLon", ""));
+			//gets the stored car loc
+			double carLat = Double.parseDouble(mSharedPrefs.getString("CarLat", ""));
+			double carLon = Double.parseDouble(mSharedPrefs.getString("CarLon", ""));
 			//display the stored car loc on its appropriate view field
 			textCarLoc.setText(carLat + ", " + carLon);
 		}
@@ -104,14 +111,15 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	/*
 	 * called when "i parked here" is clicked,
 	 * sets the current loc as the car loc
+	 * and stores them
 	 */
 	public void storeCarLoc(View view) {
 		if(servicesConnected())
 		{
 			mCurrentLoc = mLocClient.getLastLocation();
-
-			carLat = mCurrentLoc.getLatitude();
-			carLon = mCurrentLoc.getLongitude();
+ 
+			double carLat = mCurrentLoc.getLatitude();
+			double carLon = mCurrentLoc.getLongitude();
 
 			mSharedPrefs.edit().putString("CarLat", Double.toString(carLat)).commit();
 			mSharedPrefs.edit().putString("CarLon", Double.toString(carLon)).commit();
@@ -131,10 +139,6 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	 */
 	public void viewMap(View view){
 		Intent intent = new Intent(this, MapActivity.class);
-		intent.putExtra("curLat", mCurrentLoc.getLatitude());
-		intent.putExtra("curLon", mCurrentLoc.getLongitude());
-		intent.putExtra("carLat", carLat);
-		intent.putExtra("carLon", carLon);
 		startActivity(intent);
 	}
 
