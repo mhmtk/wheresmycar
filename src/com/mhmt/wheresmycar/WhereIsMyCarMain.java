@@ -51,9 +51,6 @@ GooglePlayServicesClient.OnConnectionFailedListener
 		textCurrentLoc = (TextView) findViewById(R.id.edit_currentlocation);
 		
 		mLocClient = new LocationClient(this, this, this);
-		
-		getCurrentLoc();
-		displayCurrentLoc();
 	}
 
 	/*
@@ -130,13 +127,9 @@ GooglePlayServicesClient.OnConnectionFailedListener
 	@Override
 	public void onConnected(Bundle dataBundle) {
 		// Display the connection status
-		getCurrentLoc(null);
+		getCurrentLoc();
+		displayCurrentLoc();
 		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-	}
-
-	private void getCurrentLoc(Object object) {
-		// TODO Auto-generated method stub
-
 	}
 
 
